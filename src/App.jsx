@@ -6,7 +6,7 @@ function App() {
   const [results, setResults] = useState([])
   const [resultIndex, setResultIndex] = useState(0)
   const [searchTerm, setSearchTerm] = useState('Auto')
-  const [sequenceText, setSequenceText] = useState('Auto 5\nDog 5\nCat 5\n')
+  const [sequenceText, setSequenceText] = useState('Auto:5\nDog:5\nCat:5')
 
   useEffect(() => {
     const video = document.getElementById(`video-${resultIndex}`)
@@ -25,7 +25,7 @@ function App() {
 
   const updateResults = async () => {
     const searchTerms = sequenceText.split('\n').map(s => {
-      const [term, duration] = s.split(' ');
+      const [term, duration] = s.split(':');
       return {term, duration: parseInt(duration)};
     });
     const results = (await Promise.all(searchTerms.map(async s => {
