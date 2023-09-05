@@ -2,23 +2,11 @@ import {useEffect, useState} from 'react'
 import './App.css'
 import {search} from './utils/archipanion.js'
 
-const searchTerms = [
-  {
-    duration: 5,
-    term: 'Auto'
-  }, {
-    duration: 5,
-    term: 'Dog'
-  }, {
-    duration: 5,
-    term: 'Cat'
-  },
-];
-
 function App() {
   const [results, setResults] = useState([])
   const [resultIndex, setResultIndex] = useState(0)
   const [searchTerm, setSearchTerm] = useState('Auto')
+  const [sequenceText, setSequenceText] = useState('Auto 5\nDog 5\nCat 5\n')
 
   useEffect(() => {
     const video = document.getElementById(`video-${resultIndex}`)
@@ -36,6 +24,10 @@ function App() {
   }
 
   const updateResults = async () => {
+    const searchTerms = sequenceText.split('\n').map(s => {
+      const [term, duration] = s.split(' ');
+      return {term, duration: parseInt(duration)};
+    });
     const results = (await Promise.all(searchTerms.map(async s => {
       let similars = await search(s.term,  20);
       let pos = 0;
@@ -63,7 +55,10 @@ function App() {
           <input onChange={(e) => setSearchTerm(e.target.value)} type="text" value={searchTerm}/>
           <button onClick={async () => setResults(await search(searchTerm, 5))}>Search</button>
         </div>
+        <div>
+          <textarea onChange={(e) => setSequenceText(e.target.value)} value={sequenceText}></textarea>
         <button onClick={updateResults}>Test Sequence</button>
+        </div>
         <button onClick={() => playPause()}>Play / Pause</button>
       </div>
       <div style={{ width: '100%'}}>
