@@ -1,0 +1,15 @@
+{
+  "name": "hackdays2023-storytelling",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:SRGSSR/hackdays2023-storytelling.git",
+  "author": "Sebastien Chauvin <sebastien.chauvin@rts.ch>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
