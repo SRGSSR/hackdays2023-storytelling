@@ -42,11 +42,11 @@ export const ids = (ids) => {
         },
         "body": body,
         "method": "POST"
-    }).then(r => r.json());
+    }).then(r => r.json()).then(r => r.content);
 };
 
 export const objects = (ids) => {
-    let body = `{"ids":[${ids.map(i => `"${i}"`).join(",")}}]}`;
+    let body = `{"ids":[${ids.map(i => `"${i}"`).join(",")}]}`;
     console.log(body);
     return fetch("https://srghackathon.archipanion.com/api/v1/find/object/by/id", {
         "headers": {
@@ -66,5 +66,5 @@ export const objects = (ids) => {
         },
         "body": body,
         "method": "POST"
-    }).then(r => r.json());
+    }).then(r => r.json()).then(r => r.content);
 };
