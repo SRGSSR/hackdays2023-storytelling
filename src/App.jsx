@@ -53,7 +53,7 @@ function App() {
                    console.log(vid.target.currentTime, result.startabs, result.endabs)
                    if(vid.target.currentTime>=result.endabs) {
                      vid.target.pause()
-                     setResultIndex(index === results.length -1 ? 0 : index+1)
+                     if(index !== results.length -1) setResultIndex( index+1)
                    }
                  }}
                  ></video>
