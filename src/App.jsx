@@ -6,7 +6,7 @@ function App() {
   const [results, setResults] = useState([])
   const [resultIndex, setResultIndex] = useState(0)
   const [searchTerm, setSearchTerm] = useState('Auto')
-  const [sequenceText, setSequenceText] = useState('Auto:5\nDog:5\nCat:5')
+  const [sequenceText, setSequenceText] = useState('Blue Auto:0\nDog:5\nCat:5')
 
   useEffect(() => {
     const video = document.getElementById(`video-${resultIndex}`)
@@ -32,6 +32,10 @@ function App() {
       let similars = await search(s.term,  20);
       let pos = 0;
       for (let i = 0; i < similars.length; i++) {
+        if (s.duration === 0) {
+          similars = similars.slice(0, i + 1);
+          break;
+        }
         pos += similars[i].endabs - similars[i].startabs;
         if (pos > s.duration) {
           similars[i].endabs -= pos - s.duration;
