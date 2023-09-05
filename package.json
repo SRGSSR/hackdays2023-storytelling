@@ -10,6 +10,7 @@
     "test": "node index.js"
   },
   "dependencies": {
+    "ffmpeg": "^0.0.4",
     "node-fetch": "^3.3.2"
   }
 }

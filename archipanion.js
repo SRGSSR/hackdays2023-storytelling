@@ -21,8 +21,10 @@ export const similar = (text, maxResults = "10") =>
         "method": "POST"
     }).then(r => r.json()).then(r => r.results[0].content);
 
-export const ids = (ids) =>
-    fetch("https://srghackathon.archipanion.com/api/v1/find/segments/by/id", {
+export const ids = (ids) => {
+    let body = `{"ids":[${ids.map(i => `"${i}"`).join(",")}]}`;
+    console.log("body", body);
+    return fetch("https://srghackathon.archipanion.com/api/v1/find/segments/by/id", {
         "headers": {
             "accept": "application/json, text/plain, */*",
             "accept-language": "en-GB,en;q=0.9,fr;q=0.8",
@@ -38,12 +40,15 @@ export const ids = (ids) =>
             "Referer": "https://srghackathon.archipanion.com/?q=auto",
             "Referrer-Policy": "strict-origin-when-cross-origin"
         },
-        "body": `{"ids":[${ids.join(",")}}]}`,
+        "body": body,
         "method": "POST"
     }).then(r => r.json());
+};
 
-export const objects = (ids) =>
-    fetch("https://srghackathon.archipanion.com/api/v1/find/object/by/id", {
+export const objects = (ids) => {
+    let body = `{"ids":[${ids.map(i => `"${i}"`).join(",")}}]}`;
+    console.log(body);
+    return fetch("https://srghackathon.archipanion.com/api/v1/find/object/by/id", {
         "headers": {
             "accept": "application/json, text/plain, */*",
             "accept-language": "en-GB,en;q=0.9,fr;q=0.8",
@@ -59,6 +64,7 @@ export const objects = (ids) =>
             "Referer": "https://srghackathon.archipanion.com/?q=auto",
             "Referrer-Policy": "strict-origin-when-cross-origin"
         },
-        "body": `{"ids":[${ids.join(",")}}]}`,
+        "body": body,
         "method": "POST"
-}).then(r => r.json());
+    }).then(r => r.json());
+};
