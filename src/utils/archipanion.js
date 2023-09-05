@@ -1,6 +1,6 @@
-export const search = async(text) => {
+export const search = async (text, maxResults) => {
   console.log("Starting Search...")
-  const similarResults = await similar(text, 10)
+  const similarResults = await similar(text, maxResults)
   console.log(similarResults)
   const keys = similarResults.map(r => r.key);
   const idsResults = await ids(keys)
@@ -13,8 +13,9 @@ export const search = async(text) => {
     const foundObject = os.find((object) =>
       object.objectid === objectIdToSearchFor
     )
-    idResult.path = foundObject.path
-    idResult.score = similarResults[index].value
+    idResult.path = foundObject.path;
+    idResult.score = similarResults[index].value;
+    idResult.term = text;
   })
   return idsResults
 }
