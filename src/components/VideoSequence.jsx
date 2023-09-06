@@ -5,7 +5,7 @@ export function VideoMetadata(props) {
     const entry = inventar.find(i => i.File === props.result.path);
     return <div>
         <b>[{props.result.term}]</b>
-        &nbsp; {props.result.objectId} ({Math.round(props.result.score * 100)}%)
+        &nbsp; {entry?.Titel ? `${entry.Serie} - ${entry.Titel}` : props.result.objectId} ({Math.round(props.result.score * 100)}%)
         &nbsp; <b>{entry?.Datum}</b> &nbsp;
         {entry?.Memobase ? (<><a target='_blank' href={entry?.Memobase}>🔗Link to archives</a></>) : null}
     </div>;
