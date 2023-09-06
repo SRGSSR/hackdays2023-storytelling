@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-export default async (request) => {
+export default async (request, res) => {
     console.log('request', request);
     const maxResults = 1;
     const text = "Auto";
@@ -19,5 +19,7 @@ export default async (request) => {
 
     console.log('content', content);
 
-    return new Response(`Hello, ${content}`);
+    res.statusCode = 200
+    res.setHeader('Content-Type', 'application/json')
+    res.end(JSON.stringify({ response: response }))
 };
