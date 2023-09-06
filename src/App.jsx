@@ -10,6 +10,7 @@ function App() {
   const [resultIndex, setResultIndex] = useState(0)
   const [searchTerm, setSearchTerm] = useState('Auto')
   const [sequenceText, setSequenceText] = useState('Blue Auto:0\nDog:5\nCat:5')
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -41,6 +42,7 @@ function App() {
   }
 
   const updateSequence = async (text) => {
+    setIsLoading(true)
     const searchTerms = text.split('\n').map(s => {
       const [term, duration] = s.split(':');
       return {term, duration: parseInt(duration)};
@@ -67,10 +69,14 @@ function App() {
       't': r.term, 'd': r.endabs - r.startabs
     })));
     setResults(results);
+    setIsLoading(false)
   };
 
   async function updateTerm(term) {
-    setResults(await search(term, 5));
+    setIsLoading(true)
+    const apiResults = await search(term, 5)
+    setResults(apiResults);
+    setIsLoading(false)
   }
 
   const search1TermClick = () => {
@@ -91,6 +97,7 @@ function App() {
               onSearchTermClick={search1TermClick}
               onSequenceChange={(e) => setSequenceText(e.target.value)} sequenceText={sequenceText}
               onSearchSequenceClick={searchSequence}
+              isLoading={isLoading}
               onPlayPause={() => playPause()}/>
       <VideoStitcher results={results} callbackfn={(result, index) => (
         <VideoSequence key={result.segmentId} index={index} resultIndex={resultIndex} result={result}
