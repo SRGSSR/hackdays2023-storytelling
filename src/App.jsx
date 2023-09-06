@@ -120,7 +120,7 @@ function App() {
                                    }
                                  }
                                }} />)
-      )} hideButton={hideButton}/>
+      )} hideButton={listMode || hideButton}/>
       </main>
     </div>
   )
