@@ -1,18 +1,20 @@
 import * as PropTypes from "prop-types";
+import {SequenceCreator} from "./SequenceCreator.jsx";
 
 export function Inputs(props) {
   return <div className="results">
     <h1>Architasia</h1>
     {props.isLoading ? (<div>Loading...</div>) : (<>
-      <h3>Search for Term</h3>
+      <h3>Search for a term</h3>
       <div>
         <input onChange={props.onSearchTermChanged} type="text" value={props.searchTerm}/><br/>
         <button onClick={props.onSearchTermClick}>Search</button>
       </div>
+      <br/>
       <h3>Create a sequence</h3>
       <div>
-        <textarea onChange={props.onSequenceChange} value={props.sequenceText}></textarea><br/>
-        <button onClick={props.onSearchSequenceClick}>Test Sequence</button>
+        <SequenceCreator onChange={props.onSequenceChange} value={props.sequenceText}/>
+        <button onClick={props.onSearchSequenceClick}>Create Sequence</button>
       </div>
       <br/>
       <button onClick={props.onPlayPause}>Play / Pause</button>

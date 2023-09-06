@@ -96,7 +96,7 @@ function App() {
       <main>
       <Inputs onSearchTermChanged={(e) => setSearchTerm(e.target.value)} searchTerm={searchTerm}
               onSearchTermClick={search1TermClick}
-              onSequenceChange={(e) => setSequenceText(e.target.value)} sequenceText={sequenceText}
+              onSequenceChange={(e) => setSequenceText(e)} sequenceText={sequenceText}
               onSearchSequenceClick={searchSequence}
               isLoading={isLoading}
               onPlayPause={() => playPause()}
