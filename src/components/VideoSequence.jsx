@@ -15,7 +15,7 @@ export function VideoSequence(props) {
     return <div
         style={{
             width: '100%',
-            height: "100%",
+            height: '95%',
             display: props.index === props.resultIndex ? "block" : "none",
             flex: '1'
         }}>

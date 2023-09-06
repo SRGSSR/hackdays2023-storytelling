@@ -16,8 +16,6 @@ export function Inputs(props) {
         <SequenceCreator onChange={props.onSequenceChange} value={props.sequenceText}/>
         <button onClick={props.onSearchSequenceClick}>Create Sequence</button>
       </div>
-      <br/>
-      <button onClick={props.onPlayPause}>Play / Pause</button>
       <hr/>
       <button onClick={props.onListMode}>List</button>
       <button onClick={props.onVideoMode}>Videos</button>

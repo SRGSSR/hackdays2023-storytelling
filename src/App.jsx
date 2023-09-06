@@ -99,11 +99,10 @@ function App() {
               onSequenceChange={(e) => setSequenceText(e)} sequenceText={sequenceText}
               onSearchSequenceClick={searchSequence}
               isLoading={isLoading}
-              onPlayPause={() => playPause()}
               onListMode={() => setListMode(true)}
                 onVideoMode={() => setListMode(false)}
       />
-      <VideoStitcher results={results} callbackfn={(result, index) => (
+      <VideoStitcher results={results} onPlayPause={() => playPause()} callbackfn={(result, index) => (
             listMode ? (<VideoMetadata key={result.segmentId} index={index} resultIndex={resultIndex} result={result}/>) :
                 (<VideoSequence key={result.segmentId} index={index} resultIndex={resultIndex} result={result}
                                onTimeUpdate={(vid) => {

@@ -83,3 +83,15 @@ h3 {
   color: #c91024;
   margin-bottom: 1rem;
 }
+
+.videoStitcher:hover .startStopButton {
+  visibility: visible;
+}
+
+.startStopButton {
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
