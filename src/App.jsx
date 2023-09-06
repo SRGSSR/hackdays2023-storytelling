@@ -73,22 +73,23 @@ function App() {
               aspectRatio: '16 / 9',
               width: '100%',
               overflow: 'invisible',
-              display: index===resultIndex ? 'block' : 'none'}}>
-          <video
-                 id={`video-${index}`}
-                 preload="auto"
-                 style={{width: '100%', height: '100%'}}
-                 src={`https://srghackathon.archipanion.com/objects/${result.path}?width=200#t=${result.startabs}`}
-                 onTimeUpdate={(vid) => {
-                   console.log(vid.target.currentTime, result.startabs, result.endabs)
-                   if(vid.target.currentTime>=result.endabs) {
-                     vid.target.pause()
-                     if (index < results.length - 1) {
-                       setResultIndex(index + 1)
-                     }
-                   }
-                 }}
-                 ></video>
+              display: index === resultIndex ? 'block' : 'none'}}>
+            {index - 2 <= resultIndex && resultIndex <= index ? (<video
+                id={`video-${index}`}
+                preload="auto"
+                style={{width: '100%', height: '100%'}}
+                src={`https://srghackathon.archipanion.com/objects/${result.path}?width=200#t=${result.startabs}`}
+                onTimeUpdate={(vid) => {
+                  console.log(vid.target.currentTime, result.startabs, result.endabs)
+                  if (vid.target.currentTime >= result.endabs) {
+                    vid.target.pause()
+                    if (index < results.length - 1) {
+                      setResultIndex(index + 1)
+                    }
+                  }
+                }}
+            ></video>
+            ) : null }
             <div><b>[{result.term}]</b> {resultIndex} - {result.objectId} ({Math.round(result.score * 100)}%)</div>
           </div>
         ))}
