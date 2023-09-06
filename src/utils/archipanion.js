@@ -23,7 +23,7 @@ export const search = async (text, maxResults) => {
   return filteredResult;
 }
 
-const corsApiKey = "temp_24222a7113f968e4f5f09ac3588f565d";
+const corsApiKey = "temp_7720f579181207343640540ee18d9e76";
 
 export const similar = (text, maxResults = "10") =>
   fetch("https://proxy.cors.sh/https://srghackathon.archipanion.com/api/v1/find/segments/similar", {
