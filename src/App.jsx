@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import './App.css'
 import {search} from './utils/archipanion.js'
 import {Inputs} from "./components/Inputs.jsx";
-import {VideoSequence} from "./components/VideoSequence.jsx";
+import {VideoMetadata, VideoSequence} from "./components/VideoSequence.jsx";
 import {VideoStitcher} from "./components/VideoStitcher.jsx";
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('Auto')
   const [sequenceText, setSequenceText] = useState('Blue Auto:0\nDog:5\nCat:5')
   const [isLoading, setIsLoading] = useState(false)
+  const [listMode, setListMode] = useState(false)
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -98,21 +99,24 @@ function App() {
               onSequenceChange={(e) => setSequenceText(e.target.value)} sequenceText={sequenceText}
               onSearchSequenceClick={searchSequence}
               isLoading={isLoading}
-              onPlayPause={() => playPause()}/>
+              onPlayPause={() => playPause()}
+              onListMode={() => setListMode(true)}
+                onVideoMode={() => setListMode(false)}
+      />
       <VideoStitcher results={results} callbackfn={(result, index) => (
-        <VideoSequence key={result.segmentId} index={index} resultIndex={resultIndex} result={result}
-                       onTimeUpdate={(vid) => {
-                         console.log(vid.target.currentTime, result.startabs, result.endabs)
-                         if (vid.target.currentTime >= result.endabs) {
-                           vid.target.pause()
-                           if (index < results.length - 1) {
-                             setResultIndex(index + 1)
-                           }
-                           else {
-                             setResultIndex(0)
-                           }
-                         }
-                       }}/>
+            listMode ? (<VideoMetadata key={result.segmentId} index={index} resultIndex={resultIndex} result={result}/>) :
+                (<VideoSequence key={result.segmentId} index={index} resultIndex={resultIndex} result={result}
+                               onTimeUpdate={(vid) => {
+                                 console.log(vid.target.currentTime, result.startabs, result.endabs)
+                                 if (vid.target.currentTime >= result.endabs) {
+                                   vid.target.pause()
+                                   if (index < results.length - 1) {
+                                     setResultIndex(index + 1)
+                                   } else {
+                                     setResultIndex(0)
+                                   }
+                                 }
+                               }}/>)
       )}/>
       </main>
     </div>

@@ -16,6 +16,9 @@ export function Inputs(props) {
       </div>
       <br/>
       <button onClick={props.onPlayPause}>Play / Pause</button>
+      <hr/>
+      <button onClick={props.onListMode}>List</button>
+      <button onClick={props.onVideoMode}>Videos</button>
     </>)}
   </div>;
 }
@@ -28,5 +31,7 @@ Inputs.propTypes = {
   sequenceText: PropTypes.string,
   onSearchSequenceClick: PropTypes.func,
   onPlayPause: PropTypes.func,
+  onListMode: PropTypes.func,
+  onVideoMode: PropTypes.func,
   isLoading: PropTypes.bool
 };
