@@ -30,14 +30,14 @@ const headers = {
     "content-type": "application/json",
     "authorization": "Basic c2VzYW06w7ZmZm5lZGljaA==",
 };
-export const similar = (text, maxResults = "10") =>
+const similar = (text, maxResults = "10") =>
     fetch("https://srghackathon.archipanion.com/api/v1/find/segments/similar", {
         "headers": headers,
         "body": `{"config":{"maxResults":${maxResults}},"terms":[{"type":"TEXT","categories":["visualtextcoembedding"],"data":"${text}"}],"messageType":"Q_SIM"}`,
         "method": "POST",
     }).then(r => r.json()).then(r => r.results[0].content);
 
-export const ids = (ids) => {
+const ids = (ids) => {
     let body = `{"ids":[${ids.map(i => `"${i}"`).join(",")}]}`;
     // console.log("body", body);
     return fetch("https://srghackathon.archipanion.com/api/v1/find/segments/by/id", {
@@ -51,7 +51,7 @@ export const ids = (ids) => {
     }).then(r => r.json()).then(r => r.content);
 };
 
-export const objects = (ids) => {
+const objects = (ids) => {
     let body = `{"ids":[${ids.map(i => `"${i}"`).join(",")}]}`;
     // console.log(body);
     return fetch("https://srghackathon.archipanion.com/api/v1/find/object/by/id", {
@@ -65,7 +65,7 @@ export default async (request, res) => {
     console.log('request', request);
     const maxResults = 1;
     const text = "Auto";
-    const content = search(text, maxResults);
+    const content = await search(text, maxResults);
 
     console.log('content', content);
 
