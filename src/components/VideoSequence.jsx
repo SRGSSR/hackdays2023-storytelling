@@ -1,7 +1,9 @@
 import * as PropTypes from "prop-types";
+import inventar from "../data/inventar.json";
 
 export function VideoSequence(props) {
-  return <div
+    const entry = inventar.find(i => i.File === props.result.path);
+    return <div
     style={{
       width: '100%',
       height: "100%",
@@ -18,7 +20,8 @@ export function VideoSequence(props) {
       ></video>
     ) : null}
     <div>
-      <b>[{props.result.term}]</b> {props.resultIndex} - {props.result.objectId} ({Math.round(props.result.score * 100)}%)
+      {entry?.Datum} <b>[{props.result.term}]</b> {props.resultIndex} - {props.result.objectId} ({Math.round(props.result.score * 100)}%)
+        {entry?.Memobase ? (<><br/><a href={entry?.Memobase}>🔗Link to archives</a></>) : null}
     </div>
   </div>;
 }
