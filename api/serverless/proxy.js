@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-export const search = async (text, maxResults) => {
+const search = async (text, maxResults) => {
     console.log("Starting Search...")
     const similarResults = await similar(text, maxResults)
     console.log(similarResults)
@@ -63,8 +63,9 @@ const objects = (ids) => {
 
 export default async (request, res) => {
     console.log('request', request);
-    const maxResults = 1;
-    const text = "Auto";
+    const { searchParams } = new URL(request.url);
+    const maxResults = searchParams.get('maxResults') || 10;
+    const text = searchParams.get('text');
     const content = await search(text, maxResults);
 
     console.log('content', content);
