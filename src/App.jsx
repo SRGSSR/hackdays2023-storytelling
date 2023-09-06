@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react'
 import './App.css'
 import {search} from './utils/archipanion.js'
-import * as PropTypes from "prop-types";
 import {Inputs} from "./components/Inputs.jsx";
 import {VideoSequence} from "./components/VideoSequence.jsx";
 import {VideoStitcher} from "./components/VideoStitcher.jsx";
@@ -85,7 +84,11 @@ function App() {
   };
 
   return (
-    <>
+    <div className="app">
+      <div className="header">
+        <h1>Architasia</h1>
+      </div>
+      <main>
       <Inputs onSearchTermChanged={(e) => setSearchTerm(e.target.value)} searchTerm={searchTerm}
               onSearchTermClick={search1TermClick}
               onSequenceChange={(e) => setSequenceText(e.target.value)} sequenceText={sequenceText}
@@ -106,7 +109,8 @@ function App() {
                          }
                        }}/>
       )}/>
-    </>
+      </main>
+    </div>
   )
 }
 

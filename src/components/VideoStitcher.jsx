@@ -1,7 +1,7 @@
 import * as PropTypes from "prop-types";
 
 export function VideoStitcher(props) {
-  return <div style={{width: "100%"}}>
+  return <div style={{flex: '1'}}>
     {props.results.map(props.callbackfn)}
   </div>;
 }

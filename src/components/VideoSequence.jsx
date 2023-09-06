@@ -3,15 +3,15 @@ import * as PropTypes from "prop-types";
 export function VideoSequence(props) {
   return <div
     style={{
-      aspectRatio: "16 / 9",
-      width: "100%",
-      overflow: "invisible",
-      display: props.index === props.resultIndex ? "block" : "none"
+      width: '100%',
+      height: "100%",
+      display: props.index === props.resultIndex ? "block" : "none",
+      flex: '1'
     }}>
     {props.index - 2 <= props.resultIndex && props.resultIndex <= props.index ? (<video
         id={`video-${props.index}`}
         preload="auto"
-        style={{width: "100%", height: "100%"}}
+        style={{width: "100%", aspectRatio: '16 / 9'}}
         src={`https://srghackathon.archipanion.com/objects/${props.result.path}?width=200#t=${props.result.startabs}`}
         onTimeUpdate={props.onTimeUpdate}
         autoPlay={false}

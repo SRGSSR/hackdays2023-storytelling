@@ -1,26 +1,26 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 1rem;
 }
 
-.card {
-  padding: 2em;
+.app {
 }
 
-.player {
-  position: fixed;
-  top: 100px;
-  left: 0;
-  right: 0;
-  bottom: 100px;
+.header {
 }
 
-.counter {
-  position: fixed;
-  top: 0px;
-  left: 10px;
-  right: 0;
-  height: 60px;
+main {
+  display: flex;
+}
+
+.inputs {
+
+}
+
+.results {
+  border-right: solid #1a1a1a 1px;
+}
+
+h1 {
+  color: #c91024;
+  margin: 0 0 1rem;
 }
