@@ -4,14 +4,17 @@ export function Inputs(props) {
   return <div className="results">
     <h1>Architasia</h1>
     {props.isLoading ? (<div>Loading...</div>) : (<>
-      <div className="">
-        <input onChange={props.onSearchTermChanged} type="text" value={props.searchTerm}/>
+      <h3>Search for Term</h3>
+      <div>
+        <input onChange={props.onSearchTermChanged} type="text" value={props.searchTerm}/><br/>
         <button onClick={props.onSearchTermClick}>Search</button>
       </div>
+      <h3>Create a sequence</h3>
       <div>
-        <textarea onChange={props.onSequenceChange} value={props.sequenceText}></textarea>
+        <textarea onChange={props.onSequenceChange} value={props.sequenceText}></textarea><br/>
         <button onClick={props.onSearchSequenceClick}>Test Sequence</button>
       </div>
+      <br/>
       <button onClick={props.onPlayPause}>Play / Pause</button>
     </>)}
   </div>;

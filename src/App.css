@@ -10,6 +10,13 @@
 
 main {
   display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 520px) {
+  main {
+    flex-direction: column;
+  }
 }
 
 .inputs {
@@ -17,10 +24,15 @@ main {
 }
 
 .results {
-  border-right: solid #1a1a1a 1px;
+  /*border-right: solid #1a1a1a 1px;*/
 }
 
 h1 {
   color: #c91024;
   margin: 0 0 1rem;
+}
+
+h3 {
+  color: #c91024;
+  margin: 0;
 }
