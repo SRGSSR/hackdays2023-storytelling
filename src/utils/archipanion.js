@@ -6,8 +6,7 @@ export const search = async (text, maxResults) => {
   const idsResults = await ids(keys)
   const objectIds = idsResults.map(i => i.objectId)
   let os = await objects(objectIds);
-  // console.log(objectIds)
-  // console.log(os.map(i => i.objectid))
+
   idsResults.forEach((idResult, index) => {
     const objectIdToSearchFor = idResult.objectId
     const foundObject = os.find((object) =>
@@ -17,8 +16,14 @@ export const search = async (text, maxResults) => {
     idResult.score = similarResults[index].value;
     idResult.term = text;
   })
-  return idsResults
+  let filteredResult = idsResults.filter((r, index, array) => !array.slice(0, index).find(r2 => r2.path === r.path));
+  if (filteredResult.length !== idsResults.length) {
+    console.log(`Filtered Results from ${idsResults.length} to ${filteredResult.length}`);
+  }
+  return filteredResult;
 }
+
+const corsApiKey = "temp_24222a7113f968e4f5f09ac3588f565d";
 
 export const similar = (text, maxResults = "10") =>
   fetch("https://proxy.cors.sh/https://srghackathon.archipanion.com/api/v1/find/segments/similar", {
@@ -26,7 +31,7 @@ export const similar = (text, maxResults = "10") =>
       "accept": "application/json, text/plain, */*",
       "content-type": "application/json",
       "authorization": "Basic c2VzYW06w7ZmZm5lZGljaA==",
-      "x-cors-api-key": "temp_bfb716dec2d7acb0adacf507f2b32243"
+      "x-cors-api-key": corsApiKey
     },
     "body": `{"config":{"maxResults":${maxResults}},"terms":[{"type":"TEXT","categories":["visualtextcoembedding"],"data":"${text}"}],"messageType":"Q_SIM"}`,
     "method": "POST",
@@ -40,7 +45,7 @@ export const ids = (ids) => {
       "accept": "application/json, text/plain, */*",
       "authorization": "Basic c2VzYW06w7ZmZm5lZGljaA==",
       "content-type": "application/json",
-      "x-cors-api-key": "temp_bfb716dec2d7acb0adacf507f2b32243"
+      "x-cors-api-key": corsApiKey
     },
     "body": body,
     "method": "POST"
@@ -55,7 +60,7 @@ export const objects = (ids) => {
       "accept": "application/json, text/plain, */*",
       "authorization": "Basic c2VzYW06w7ZmZm5lZGljaA==",
       "content-type": "application/json",
-      "x-cors-api-key": "temp_bfb716dec2d7acb0adacf507f2b32243"
+      "x-cors-api-key": corsApiKey
     },
     "body": body,
     "method": "POST"

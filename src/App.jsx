@@ -6,7 +6,7 @@ function App() {
   const [results, setResults] = useState([])
   const [resultIndex, setResultIndex] = useState(0)
   const [searchTerm, setSearchTerm] = useState('Auto')
-  const [sequenceText, setSequenceText] = useState('Auto 5\nDog 5\nCat 5\n')
+  const [sequenceText, setSequenceText] = useState('Blue Auto:0\nDog:5\nCat:5')
 
   useEffect(() => {
     const video = document.getElementById(`video-${resultIndex}`)
@@ -25,13 +25,17 @@ function App() {
 
   const updateResults = async () => {
     const searchTerms = sequenceText.split('\n').map(s => {
-      const [term, duration] = s.split(' ');
+      const [term, duration] = s.split(':');
       return {term, duration: parseInt(duration)};
     });
     const results = (await Promise.all(searchTerms.map(async s => {
       let similars = await search(s.term,  20);
       let pos = 0;
       for (let i = 0; i < similars.length; i++) {
+        if (s.duration === 0) {
+          similars = similars.slice(0, i + 1);
+          break;
+        }
         pos += similars[i].endabs - similars[i].startabs;
         if (pos > s.duration) {
           similars[i].endabs -= pos - s.duration;
@@ -69,22 +73,23 @@ function App() {
               aspectRatio: '16 / 9',
               width: '100%',
               overflow: 'invisible',
-              display: index===resultIndex ? 'block' : 'none'}}>
-          <video
-                 id={`video-${index}`}
-                 preload="auto"
-                 style={{width: '100%', height: '100%'}}
-                 src={`https://srghackathon.archipanion.com/objects/${result.path}?width=200#t=${result.startabs}`}
-                 onTimeUpdate={(vid) => {
-                   console.log(vid.target.currentTime, result.startabs, result.endabs)
-                   if(vid.target.currentTime>=result.endabs) {
-                     vid.target.pause()
-                     if (index < results.length - 1) {
-                       setResultIndex(index + 1)
-                     }
-                   }
-                 }}
-                 ></video>
+              display: index === resultIndex ? 'block' : 'none'}}>
+            {index - 2 <= resultIndex && resultIndex <= index ? (<video
+                id={`video-${index}`}
+                preload="auto"
+                style={{width: '100%', height: '100%'}}
+                src={`https://srghackathon.archipanion.com/objects/${result.path}?width=200#t=${result.startabs}`}
+                onTimeUpdate={(vid) => {
+                  console.log(vid.target.currentTime, result.startabs, result.endabs)
+                  if (vid.target.currentTime >= result.endabs) {
+                    vid.target.pause()
+                    if (index < results.length - 1) {
+                      setResultIndex(index + 1)
+                    }
+                  }
+                }}
+            ></video>
+            ) : null }
             <div><b>[{result.term}]</b> {resultIndex} - {result.objectId} ({Math.round(result.score * 100)}%)</div>
           </div>
         ))}
