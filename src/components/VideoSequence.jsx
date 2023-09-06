@@ -12,7 +12,7 @@ export function VideoSequence(props) {
         id={`video-${props.index}`}
         preload="auto"
         style={{width: "100%", aspectRatio: '16 / 9'}}
-        src={`https://srghackathon.archipanion.com/objects/${props.result.path}?width=200#t=${props.result.startabs}`}
+        src={`https://sesam:%C3%B6ffnedich@srghackathon.archipanion.com/objects/${props.result.path}?width=200#t=${props.result.startabs}`}
         onTimeUpdate={props.onTimeUpdate}
         autoPlay={false}
       ></video>

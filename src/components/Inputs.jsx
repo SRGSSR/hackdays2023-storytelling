@@ -2,7 +2,8 @@ import * as PropTypes from "prop-types";
 
 export function Inputs(props) {
   return <div className="results">
-    <div>
+    <h1>Architasia</h1>
+    <div className="">
       <input onChange={props.onSearchTermChanged} type="text" value={props.searchTerm}/>
       <button onClick={props.onSearchTermClick}>Search</button>
     </div>

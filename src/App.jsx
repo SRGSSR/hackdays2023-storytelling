@@ -85,9 +85,7 @@ function App() {
 
   return (
     <div className="app">
-      <div className="header">
-        <h1>Architasia</h1>
-      </div>
+      <div className="header"></div>
       <main>
       <Inputs onSearchTermChanged={(e) => setSearchTerm(e.target.value)} searchTerm={searchTerm}
               onSearchTermClick={search1TermClick}
