@@ -12,6 +12,7 @@ function App() {
   const [sequenceText, setSequenceText] = useState('Blue Auto:0\nDog:5\nCat:5')
   const [isLoading, setIsLoading] = useState(false)
   const [listMode, setListMode] = useState(false)
+  const [hideButton, setHideButton] = useState(false)
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -40,6 +41,7 @@ function App() {
       }
       else video.pause()
     }
+    setTimeout(() => setHideButton(true), 1000);
   }
 
   const updateSequence = async (text) => {
@@ -71,6 +73,7 @@ function App() {
     })));
     setResults(results);
     setIsLoading(false)
+    setHideButton(false)
   };
 
   async function updateTerm(term) {
@@ -78,6 +81,7 @@ function App() {
     const apiResults = await search(term, 5)
     setResults(apiResults);
     setIsLoading(false)
+    setHideButton(false)
   }
 
   const search1TermClick = () => {
@@ -115,8 +119,8 @@ function App() {
                                      setResultIndex(0)
                                    }
                                  }
-                               }}/>)
-      )}/>
+                               }} />)
+      )} hideButton={hideButton}/>
       </main>
     </div>
   )
