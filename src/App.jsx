@@ -1,6 +1,10 @@
 import {useEffect, useState} from 'react'
 import './App.css'
 import {search} from './utils/archipanion.js'
+import * as PropTypes from "prop-types";
+import {Inputs} from "./components/Inputs.jsx";
+import {VideoSequence} from "./components/VideoSequence.jsx";
+import {VideoStitcher} from "./components/VideoStitcher.jsx";
 
 function App() {
   const [results, setResults] = useState([])
@@ -24,7 +28,7 @@ function App() {
 
   useEffect(() => {
     const video = document.getElementById(`video-${resultIndex}`)
-    if (video) video.play();
+    if (video && resultIndex!==0) video.play();
   }, [resultIndex]);
 
   const playPause = () => {
@@ -82,46 +86,26 @@ function App() {
 
   return (
     <>
-      <div className="card">
-        <div>
-          <input onChange={(e) => setSearchTerm(e.target.value)} type="text" value={searchTerm}/>
-          <button onClick={search1TermClick}>Search</button>
-        </div>
-        <div>
-          <textarea onChange={(e) => setSequenceText(e.target.value)} value={sequenceText}></textarea>
-        <button onClick={searchSequence}>Test Sequence</button>
-        </div>
-        <button onClick={() => playPause()}>Play / Pause</button>
-      </div>
-      <div style={{ width: '100%'}}>
-        {results.map((result, index) => (
-          <div
-            key={result.segmentId}
-            style={{
-              aspectRatio: '16 / 9',
-              width: '100%',
-              overflow: 'invisible',
-              display: index === resultIndex ? 'block' : 'none'}}>
-            {index - 2 <= resultIndex && resultIndex <= index ? (<video
-                id={`video-${index}`}
-                preload="auto"
-                style={{width: '100%', height: '100%'}}
-                src={`https://srghackathon.archipanion.com/objects/${result.path}?width=200#t=${result.startabs}`}
-                onTimeUpdate={(vid) => {
-                  console.log(vid.target.currentTime, result.startabs, result.endabs)
-                  if (vid.target.currentTime >= result.endabs) {
-                    vid.target.pause()
-                    if (index < results.length - 1) {
-                      setResultIndex(index + 1)
-                    }
-                  }
-                }}
-            ></video>
-            ) : null }
-            <div><b>[{result.term}]</b> {resultIndex} - {result.objectId} ({Math.round(result.score * 100)}%)</div>
-          </div>
-        ))}
-      </div>
+      <Inputs onSearchTermChanged={(e) => setSearchTerm(e.target.value)} searchTerm={searchTerm}
+              onSearchTermClick={search1TermClick}
+              onSequenceChange={(e) => setSequenceText(e.target.value)} sequenceText={sequenceText}
+              onSearchSequenceClick={searchSequence}
+              onPlayPause={() => playPause()}/>
+      <VideoStitcher results={results} callbackfn={(result, index) => (
+        <VideoSequence key={result.segmentId} index={index} resultIndex={resultIndex} result={result}
+                       onTimeUpdate={(vid) => {
+                         console.log(vid.target.currentTime, result.startabs, result.endabs)
+                         if (vid.target.currentTime >= result.endabs) {
+                           vid.target.pause()
+                           if (index < results.length - 1) {
+                             setResultIndex(index + 1)
+                           }
+                           else {
+                             setResultIndex(0)
+                           }
+                         }
+                       }}/>
+      )}/>
     </>
   )
 }
