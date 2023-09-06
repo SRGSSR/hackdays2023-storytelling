@@ -17,7 +17,11 @@ export const search = async (text, maxResults) => {
     idResult.score = similarResults[index].value;
     idResult.term = text;
   })
-  return idsResults
+  let filteredResult = idsResults.filter((r, index, array) => !array.slice(0, index).find(r2 => r2.path === r.path));
+  if (filteredResult.length !== idsResults.length) {
+    console.log(`Filtered Results from ${idsResults.length} to ${filteredResult.length}`);
+  }
+  return filteredResult;
 }
 
 export const similar = (text, maxResults = "10") =>
