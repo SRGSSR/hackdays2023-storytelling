@@ -9,6 +9,20 @@ function App() {
   const [sequenceText, setSequenceText] = useState('Blue Auto:0\nDog:5\nCat:5')
 
   useEffect(() => {
+    const hash = window.location.hash;
+    const value = decodeURIComponent(hash.substring(3));
+    if (hash.startsWith('#T#')) {
+      setSearchTerm(value);
+      setSequenceText('');
+      updateTerm(value);
+    } else if (hash.startsWith('#S#')) {
+      setSearchTerm('');
+      setSequenceText(value);
+      updateSequence(value)
+    }
+  }, []);
+
+  useEffect(() => {
     const video = document.getElementById(`video-${resultIndex}`)
     if (video) video.play();
   }, [resultIndex]);
@@ -23,8 +37,8 @@ function App() {
     }
   }
 
-  const updateResults = async () => {
-    const searchTerms = sequenceText.split('\n').map(s => {
+  const updateSequence = async (text) => {
+    const searchTerms = text.split('\n').map(s => {
       const [term, duration] = s.split(':');
       return {term, duration: parseInt(duration)};
     });
@@ -52,16 +66,30 @@ function App() {
     setResults(results);
   };
 
+  async function updateTerm(term) {
+    setResults(await search(term, 5));
+  }
+
+  const search1TermClick = () => {
+    window.location.hash = `T#${searchTerm}`;
+    updateTerm(searchTerm);
+  };
+
+  const searchSequence = () => {
+    window.location.hash = `S#${sequenceText.replaceAll('\n', '%0A')}`;
+    updateSequence(sequenceText);
+  };
+
   return (
     <>
       <div className="card">
         <div>
           <input onChange={(e) => setSearchTerm(e.target.value)} type="text" value={searchTerm}/>
-          <button onClick={async () => setResults(await search(searchTerm, 5))}>Search</button>
+          <button onClick={search1TermClick}>Search</button>
         </div>
         <div>
           <textarea onChange={(e) => setSequenceText(e.target.value)} value={sequenceText}></textarea>
-        <button onClick={updateResults}>Test Sequence</button>
+        <button onClick={searchSequence}>Test Sequence</button>
         </div>
         <button onClick={() => playPause()}>Play / Pause</button>
       </div>
