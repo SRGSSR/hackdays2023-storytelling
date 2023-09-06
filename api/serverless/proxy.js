@@ -63,7 +63,7 @@ const objects = (ids) => {
 
 export default async (request, res) => {
     console.log('request', request);
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL('https://a.ch/a' + request.url);
     const maxResults = searchParams.get('maxResults') || 10;
     const text = searchParams.get('text');
     const content = await search(text, maxResults);
